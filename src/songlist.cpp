@@ -106,11 +106,17 @@ SongList::SongList(float maxDance, float maxEnergy, bool expl) {
 		// Get danceability
 		d = parseString(data);
 		data = data.substr(d.size() + 1);
+		if (stof(d) > maxDance) {
+			continue;
+		}
 		song.danceability = stof(d);
 
 		// Get energy
 		d = parseString(data);
 		data = data.substr(d.size() + 1);
+		if (stof(d) > maxEnergy) {
+			continue;
+		}
 		song.energy = stof(d);
 
 		// Push into song list
@@ -118,7 +124,7 @@ SongList::SongList(float maxDance, float maxEnergy, bool expl) {
 	}
 }
 
-vector<SongList::Song>& SongList::topTen() const {
+vector<SongList::Song> SongList::topTen() const {
 	// Create a list and allocate *up to* 10 songs
 	// Assume list is already sorted as needed
 	vector<SongList::Song> vec(10);
@@ -128,6 +134,10 @@ vector<SongList::Song>& SongList::topTen() const {
 	}
 	return vec;
 }
+
+// These sorts for some reason do give different resutls
+// sometimes, probably due to sorting over the sum.
+// Might need to address.
 
 void SongList::quicksort() {
 	qsorthelper(0, list.size() - 1);

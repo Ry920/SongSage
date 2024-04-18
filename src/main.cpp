@@ -15,11 +15,21 @@ using namespace std;
 	and user input
 */
 
+// Testing by Ryan
+/*
+	Results:
+	Quicksort and Shellsort work as intended, and so does the
+	maximum limits on the energy and danceability. Only problem is
+	that some songs end up in flipped orders between the two
+	sorts if they have the exact same sum. Probably fixable in
+	the implementation of either sort.
+*/
 int main() {
-	SongList s(0.25, 0.25, true);
-	cout << s.list[88731].track_name << " " << s.list[88731].energy << endl;
-	cout << "-----------------------------\n";
+	SongList s(0.25, 0.75, true);
 	s.quicksort();
-	cout << s.list[0].energy << " " << s.list[0].danceability << endl;
+	vector<SongList::Song> l = s.topTen();
+	for (SongList::Song song : l) {
+		cout << song.artist << " " << song.track_name << " " << song.danceability << " " << song.energy << endl;
+	}
 	return 0;
 }

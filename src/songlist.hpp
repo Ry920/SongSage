@@ -30,7 +30,7 @@ public:
 		float danceability;
 		float energy;
 	};
-public:
+public: // Make private when done testing
 	// NOTE: Track ID's are unique
 	vector<Song> list;
 	void qsorthelper(int low, int high);
@@ -60,7 +60,7 @@ public:
 public:
 	// expl = false -> No explicit, expl = true -> Both explicit and not explicit
 	SongList(float maxDance, float maxEnergy, bool expl);
-	vector<Song>& topTen() const;
+	vector<Song> topTen() const;
 	void quicksort();
 	void shellsort();
 	
