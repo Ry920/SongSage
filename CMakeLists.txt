@@ -12,7 +12,7 @@ endif()
 project ("Song Sage")
 
 # Add source to this project's executable.
-add_executable (SongSage "src/main.cpp" "src/songlist.cpp")
+add_executable (SongSage "src/main.cpp" "src/songlist.cpp" "src/Button.cpp")
 target_link_libraries(SongSage ${CMAKE_SOURCE_DIR}/lib/sfml-graphics.lib)
 target_link_libraries(SongSage ${CMAKE_SOURCE_DIR}/lib/sfml-system.lib)
 target_link_libraries(SongSage ${CMAKE_SOURCE_DIR}/lib/sfml-window.lib)
