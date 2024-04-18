@@ -42,10 +42,13 @@ int SongList::partition(int low, int high) {
 	return down;
 }
 
-SongList::SongList() {
+SongList::SongList(float maxDance, float maxEnergy, bool expl) {
 	// Keep track of track ID's since they are unique
 	unordered_set<string> track_ids;
 	// TODO: Continue implementation with file reading
+	//			a. Implement with limits here so that 
+	//			the songs are loaded after the user's
+	//			choice is already made
 
 }
 

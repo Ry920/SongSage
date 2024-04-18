@@ -36,7 +36,8 @@ private:
 	void qsorthelper(int low, int high);
 	int partition(int low, int high);
 public:
-	SongList(); // Initialize with data from dataset
+	// expl = false -> No explicit, expl = true -> Both explicit and not explicit
+	SongList(float maxDance, float maxEnergy, bool expl);
 	vector<Song>& topTen() const;
 	void quicksort();
 	void shellsort();

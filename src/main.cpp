@@ -1,4 +1,5 @@
 ﻿#include <iostream>
+#include <SFML/Graphics.hpp>
 #include "songlist.hpp"
 using namespace std;
 
@@ -13,8 +14,18 @@ using namespace std;
 	and user input
 */
 
-int main()
-{
-	
+int main() {
+	sf::RenderWindow w(sf::VideoMode(800, 600), "test");
+	while (w.isOpen()) {
+		for (auto event = sf::Event{}; w.pollEvent(event);)
+		{
+			if (event.type == sf::Event::Closed)
+			{
+				w.close();
+			}
+		}
+		w.display();
+		w.clear();
+	}
 	return 0;
 }
