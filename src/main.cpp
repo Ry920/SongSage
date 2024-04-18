@@ -1,5 +1,6 @@
 ﻿#include <iostream>
 #include <SFML/Graphics.hpp>
+#include <fstream>
 #include "songlist.hpp"
 using namespace std;
 
@@ -15,17 +16,10 @@ using namespace std;
 */
 
 int main() {
-	sf::RenderWindow w(sf::VideoMode(800, 600), "test");
-	while (w.isOpen()) {
-		for (auto event = sf::Event{}; w.pollEvent(event);)
-		{
-			if (event.type == sf::Event::Closed)
-			{
-				w.close();
-			}
-		}
-		w.display();
-		w.clear();
-	}
+	SongList s(0.25, 0.25, true);
+	cout << s.list[88731].track_name << " " << s.list[88731].energy << endl;
+	cout << "-----------------------------\n";
+	s.quicksort();
+	cout << s.list[0].energy << " " << s.list[0].danceability << endl;
 	return 0;
 }

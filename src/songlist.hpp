@@ -30,11 +30,33 @@ public:
 		float danceability;
 		float energy;
 	};
-private:
+public:
 	// NOTE: Track ID's are unique
 	vector<Song> list;
 	void qsorthelper(int low, int high);
 	int partition(int low, int high);
+	static string parseString(string data) {
+		string s = "";
+		bool quotes = false;
+		int quotenum = 0;
+		for (int i = 0; i < data.size(); i++) {
+			if (data[i] == '"' && !quotes) {
+				quotes = true;
+			}
+			if (data[i] == '"' && quotes) {
+				quotenum++;
+			}
+			if (quotes && data[i] == '"' && data[i + 1] == ',' && quotenum % 2 == 0) {
+				s += data[i];
+				break;
+			}
+			if (!quotes && data[i] == ',') {
+				break;
+			}
+			s += data[i];
+		}
+		return s;
+	}
 public:
 	// expl = false -> No explicit, expl = true -> Both explicit and not explicit
 	SongList(float maxDance, float maxEnergy, bool expl);

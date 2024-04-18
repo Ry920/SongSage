@@ -10,8 +10,12 @@ void SongList::qsorthelper(int low, int high) {
 		return;
 	}
 	int p = partition(low, high);
-	qsorthelper(low, p - 1);
-	qsorthelper(p + 1, high);
+	if (p != 0) {
+		qsorthelper(low, p - 1);
+	}
+	if (p != high) {
+		qsorthelper(p + 1, high);
+	}
 }
 
 int SongList::partition(int low, int high) {
@@ -49,7 +53,69 @@ SongList::SongList(float maxDance, float maxEnergy, bool expl) {
 	//			a. Implement with limits here so that 
 	//			the songs are loaded after the user's
 	//			choice is already made
+	string path = "data\\dataset.csv";
+	ifstream file(path);
+	// Relative path shenanigans
+	while (!file.is_open()) {
+		path = "..\\" + path;
+		file = ifstream(path);
+	}
+	string line;
+	getline(file, line); // Skip first line
+	while (getline(file, line)) {
+		stringstream ss(line);
+		Song song;
+		string data;
+		getline(ss, data, ',');
+		getline(ss, data, ','); // Track id
+		if (track_ids.find(data) != track_ids.end()) {
+			continue;
+		}
+		track_ids.insert(data);
+		getline(ss, data); // Get rest of line
 
+		// Get artist
+		string d = parseString(data);
+		data = data.substr(d.size() + 1);
+		song.artist = d;
+
+		// Get album name
+		d = parseString(data);
+		data = data.substr(d.size() + 1);
+		song.album_name = d;
+
+		// Get track name
+		d = parseString(data);
+		data = data.substr(d.size() + 1);
+		song.track_name = d;
+
+		// Skip popularity
+		d = parseString(data);
+		data = data.substr(d.size() + 1);
+		
+		// Get duration
+		d = parseString(data);
+		data = data.substr(d.size() + 1);
+		song.duration_ms = stoi(d);
+
+		// Get explicit
+		d = parseString(data);
+		data = data.substr(d.size() + 1);
+		song.expl = (d == "True");
+
+		// Get danceability
+		d = parseString(data);
+		data = data.substr(d.size() + 1);
+		song.danceability = stof(d);
+
+		// Get energy
+		d = parseString(data);
+		data = data.substr(d.size() + 1);
+		song.energy = stof(d);
+
+		// Push into song list
+		list.push_back(song);
+	}
 }
 
 vector<SongList::Song>& SongList::topTen() const {
@@ -64,7 +130,7 @@ vector<SongList::Song>& SongList::topTen() const {
 }
 
 void SongList::quicksort() {
-	qsorthelper(0, list.size());
+	qsorthelper(0, list.size() - 1);
 }
 
 void SongList::shellsort() {
