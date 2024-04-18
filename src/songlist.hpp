@@ -30,9 +30,11 @@ public:
 		float danceability;
 		float energy;
 	};
-public:
+private:
 	// NOTE: Track ID's are unique
 	vector<Song> list;
+	void qsorthelper(int low, int high);
+	int partition(int low, int high);
 public:
 	SongList(); // Initialize with data from dataset
 	vector<Song>& topTen() const;
