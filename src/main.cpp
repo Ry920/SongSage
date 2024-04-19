@@ -42,7 +42,7 @@ int main() {
 	}
 
     // creating main window
-    sf::RenderWindow startWindow(sf::VideoMode(800, 600), "Start Window", sf::Style::Close);
+    sf::RenderWindow startWindow(sf::VideoMode(800, 600), "Song Sage - Welcome!", sf::Style::Close);
 
     // setting fonts
     sf::Font font;
@@ -103,6 +103,25 @@ int main() {
     energyText.setFillColor(sf::Color::White);
     setText(energyText, 420, 350);
 
+    // ON/OFF SWITCH - Explicit (YES/NO)
+    sf::Texture onSwitch;
+    if(!onSwitch.loadFromFile("..\\..\\files\\on_toggle.png")){
+        cout << "Switch not found." << endl;
+    }
+    sf::Texture offSwitch;
+    if(!offSwitch.loadFromFile("..\\..\\files\\off_toggle.png")){
+        cout << "Switch not found." << endl;
+    }
+    sf::Sprite explicitSwitch;
+    explicitSwitch.setTexture(onSwitch);
+    explicitSwitch.setPosition(630, 390);
+    sf::Text explicitText;
+    explicitText.setFont(font2);
+    explicitText.setString("Explicit?");
+    explicitText.setCharacterSize(24);
+    explicitText.setFillColor(sf::Color::White);
+    setText(explicitText, 690, 350);
+;
 
     while(startWindow.isOpen()){
         sf::Event event;
@@ -110,6 +129,25 @@ int main() {
         while(startWindow.pollEvent(event)){
             if(event.type == sf::Event::Closed){
                 startWindow.close();
+            }
+
+            if(event.type == sf::Event::MouseButtonPressed){
+                if(event.mouseButton.button == sf::Mouse::Left){
+                    auto explicitSwitchBouund = explicitSwitch.getGlobalBounds();
+                    // IF EXPLICIT SWITCH IS PRESSED
+                    if(explicitSwitchBouund.contains(event.mouseButton.x, event.mouseButton.y)){
+                        // Switch its texture to opposite texture
+                        if(explicitSwitch.getTexture() == &onSwitch){
+                            explicitSwitch.setTexture(offSwitch);
+                            ////TODO: Set songlist's expl to false
+                        }
+                        else{
+                            explicitSwitch.setTexture(onSwitch);
+                            ////TODO: Set songlist's expl to true
+                        }
+                    }
+
+                }
             }
         }
 
@@ -123,6 +161,8 @@ int main() {
         startWindow.draw(slider2);
         startWindow.draw(toggle2);
         startWindow.draw(energyText);
+        startWindow.draw(explicitText);
+        startWindow.draw(explicitSwitch);
 
         startWindow.display();
     }
