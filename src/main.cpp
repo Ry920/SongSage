@@ -159,10 +159,19 @@ int main() {
 
             if(event.type == sf::Event::MouseButtonPressed){
                 if(event.mouseButton.button == sf::Mouse::Left){
+                    // IF DANCE SLIDER IS MOVED:
+                    auto slider1Bound = slider1.getGlobalBounds();
+                    if(slider1Bound.contains(event.mouseButton.x, event.mouseButton.y)){
+                        if(event.mouseButton.x >= 30 && event.mouseButton.x <= 280){
+                            cout << "clicked.";
+                            toggle1.setPosition((float)event.mouseButton.x, 390);
+                        }
+//                      ////TODO: Use "event.mouseButton.x" / 250 for the danceability variable
+                    }
 
                     // IF EXPLICIT SWITCH IS PRESSED
-                    auto explicitSwitchBouund = explicitSwitch.getGlobalBounds();
-                    if(explicitSwitchBouund.contains(event.mouseButton.x, event.mouseButton.y)){
+                    auto explicitSwitchBound = explicitSwitch.getGlobalBounds();
+                    if(explicitSwitchBound.contains(event.mouseButton.x, event.mouseButton.y)){
                         // Switch its image to display oppite image
                         if(explicitSwitch.getTexture() == &onSwitch){
                             explicitSwitch.setTexture(offSwitch);
