@@ -4,6 +4,14 @@
 #include "songlist.hpp"
 using namespace std;
 
+// setText function from "Minesweeper Project" - created by Dr. Laura Cruz Casto for COP3503, Summer 2023
+void setText(sf::Text &text, float x, float y){
+    sf::FloatRect textRect = text.getLocalBounds();
+    text.setOrigin(textRect.left + textRect.width/2.0f,
+                   textRect.top + textRect.height/2.0f);
+    text.setPosition(sf::Vector2f(x, y));
+}
+
 /*
 	Overall TODO:
 	1. Finish SongList functionality + sorting
@@ -16,26 +24,37 @@ using namespace std;
 */
 
 int main() {
-	sf::RenderWindow w(sf::VideoMode(800, 600), "test");
+    sf::RenderWindow w(sf::VideoMode(800, 600), "test");
+
+    //setting font
+    sf::Font font;
+    if(!font.loadFromFile("files/font.ttf")){
+        cout << "Font not found." << endl;
+    }
+
+    sf::Text welcomeText;
+    welcomeText.setFont(font);
+    welcomeText.setString("SongSage: Tailored Tunes Just for You");
+    welcomeText.setCharacterSize(48);
+    welcomeText.setFillColor(sf::Color::Black);
+    setText(welcomeText, 400, 300);
+
 
 	while (w.isOpen()) {
-		for (auto event = sf::Event{}; w.pollEvent(event);)
+        sf::Event event;
+		while(w.pollEvent(event))
 		{
 			if (event.type == sf::Event::Closed)
 			{
 				w.close();
 			}
 		}
-        sf::Text welcomeText;
-        welcomeText.setString("SongSage: Tailored Tunes Just for You");
-        welcomeText.setCharacterSize(48);
-        welcomeText.setFillColor(sf::Color(1, 50, 32));
 
         w.clear(sf::Color(208, 217, 179));
 
-		w.display();
+        w.draw(welcomeText);
 
-		w.clear();
+		w.display();
 	}
 	return 0;
 }
