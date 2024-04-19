@@ -113,6 +113,16 @@ int main() {
     energyText.setFillColor(sf::Color::White);
     setText(energyText, 420, 350);
 
+    // NEXT arrow
+    sf::Sprite nextArrow;
+    sf::Texture nextArrowGraphic;
+    if(!nextArrowGraphic.loadFromFile("..\\..\\files\\nextArrow.png")){
+        cout << "Next arrow not foud." << endl;
+    }
+    nextArrow.setTexture(nextArrowGraphic);
+    nextArrow.setPosition(630, 480);
+
+
     // ON/OFF SWITCH - Explicit (YES/NO)
     sf::Texture onSwitch;
     if(!onSwitch.loadFromFile("..\\..\\files\\on_toggle.png")){
@@ -154,8 +164,6 @@ int main() {
     shellSortText.setFillColor(sf::Color::White);
     setText(shellSortText, 490, 530);
 
-
-
     while(startWindow.isOpen()){
         sf::Event event;
 
@@ -171,8 +179,7 @@ int main() {
                     if(slider1Bound.contains(event.mouseButton.x, event.mouseButton.y)){
                         if(event.mouseButton.x >= 30 && event.mouseButton.x <= 280) {
                             toggle1.setPosition((float) event.mouseButton.x, 390);
-                            ////TODO: Use "event.mouseButton.x" - 30 / 250 for the danceability variable
-                            cout << ((float) event.mouseButton.x - 30.0) / 250.00 << " ";
+                            // set danceability variable relative to toggle position
                             danceability = ((float) event.mouseButton.x - 30.0) / 250.00;
                         }
 
@@ -183,23 +190,23 @@ int main() {
                     if(slider2Bound.contains(event.mouseButton.x, event.mouseButton.y)){
                         if(event.mouseButton.x >= 300 && event.mouseButton.x <= 550){
                             toggle2.setPosition((float)event.mouseButton.x, 390);
-                            ////TODO: Use "event.mouseButton.x" - 300 / 250 for the energy variable
-                            energy = danceability = ((float)event.mouseButton.x - 300.0) / 250.00;
+                            // set energy variable relative to toggle position:
+                            energy = ((float)event.mouseButton.x - 300.0) / 250.00;
                         }
                     }
 
                     // IF EXPLICIT SWITCH IS PRESSED
                     auto explicitSwitchBound = explicitSwitch.getGlobalBounds();
                     if(explicitSwitchBound.contains(event.mouseButton.x, event.mouseButton.y)){
-                        // Switch its image to display oppite image
+                        // Switch its image to display opposite image
                         if(explicitSwitch.getTexture() == &onSwitch){
                             explicitSwitch.setTexture(offSwitch);
-                            ////TODO: Set songlist's expl to false
+                            // set bool to false
                             explicitLanguage = false;
                         }
                         else{
                             explicitSwitch.setTexture(onSwitch);
-                            ////TODO: Set songlist's expl to true
+                            // set bool to true
                             explicitLanguage = true;
                         }
                     }
@@ -209,7 +216,8 @@ int main() {
                     if(quickSortBound.contains(event.mouseButton.x, event.mouseButton.y)){
                         quickSortText.setStyle(sf::Text::Underlined | sf::Text::Bold);
                         shellSortText.setStyle(sf::Text::Regular);
-                        ////TODO: this would then be, for example, s.quickSort
+                        // quickSort is selected
+                        sortStyle = 1;
                     }
 
                     //IF "SHELL SORT" IS PRESSED
@@ -217,7 +225,36 @@ int main() {
                     if(shellSortBound.contains(event.mouseButton.x, event.mouseButton.y)){
                         shellSortText.setStyle(sf::Text::Underlined | sf::Text::Bold);
                         quickSortText.setStyle(sf::Text::Regular);
-                        ////TODO: this would then be, for example, s.shellSort
+                        // shellSort is selected
+                        sortStyle = 2;
+                    }
+
+                    //IF NEXT ARROW IS PRESSED and a sort style is selected
+                    auto nextArrowBound = nextArrow.getGlobalBounds();
+                    if(nextArrowBound.contains(event.mouseButton.x, event.mouseButton.y) && sortStyle != 0){
+                        ////TODO: close out window and load results screen. "finalList" is where the matches are stored
+                        if(sortStyle == 1){
+                            // quickSort;
+                            SongList newList(danceability, energy, explicitLanguage);
+                            newList.quicksort();
+                            vector<SongList::Song> finalList = newList.topTen();
+
+                            ////this is printing out the list in command line, you can delete in the final implementation
+                            for (SongList::Song song : finalList) {
+                                cout << song.artist << " " << song.track_name << " " << song.danceability << " " << song.energy << endl;
+                            }
+                        }
+                        if(sortStyle == 2){
+                            // shellSort
+                            SongList newList(danceability, energy, explicitLanguage);
+                            newList.shellsort();
+                            vector<SongList::Song> finalList = newList.topTen();
+
+                            ////this is printing out the list in command line, you can delete in the final implementation
+                            for (SongList::Song song : finalList) {
+                                cout << song.artist << " " << song.track_name << " " << song.danceability << " " << song.energy << endl;
+                            }
+                        }
                     }
                 }
             }
@@ -235,6 +272,8 @@ int main() {
         startWindow.draw(slider2);
         startWindow.draw(toggle2);
         startWindow.draw(energyText);
+
+        startWindow.draw(nextArrow);
 
         startWindow.draw(explicitText);
         startWindow.draw(explicitSwitch);
