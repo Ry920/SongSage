@@ -177,7 +177,7 @@ int main() {
                     //IF "QUICK SORT" IS PRESSED
                     auto quickSortBound = quickSortText.getGlobalBounds();
                     if(quickSortBound.contains(event.mouseButton.x, event.mouseButton.y)){
-                        quickSortText.setStyle(sf::Text::Underlined);
+                        quickSortText.setStyle(sf::Text::Underlined | sf::Text::Bold);
                         shellSortText.setStyle(sf::Text::Regular);
                         ////TODO: this would then be, for example, s.quickSort
                     }
@@ -185,7 +185,7 @@ int main() {
                     //IF "SHELL SORT" IS PRESSED
                     auto shellSortBound = shellSortText.getGlobalBounds();
                     if(shellSortBound.contains(event.mouseButton.x, event.mouseButton.y)){
-                        shellSortText.setStyle(sf::Text::Underlined);
+                        shellSortText.setStyle(sf::Text::Underlined | sf::Text::Bold);
                         quickSortText.setStyle(sf::Text::Regular);
                         ////TODO: this would then be, for example, s.shellSort
                     }
