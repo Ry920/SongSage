@@ -39,9 +39,9 @@ int main() {
 	SongList s(0.25, 0.75, true);
 	s.quicksort();
 	vector<SongList::Song> l = s.topTen();
-    for (SongList::Song song : l) {
-		cout << song.artist << " " << song.track_name << " " << song.danceability << " " << song.energy << endl;
-	}
+//    for (SongList::Song song : l) {
+//		cout << song.artist << " " << song.track_name << " " << song.danceability << " " << song.energy << endl;
+//	}
 
     // set default values
     float danceability = 0.00;
@@ -164,6 +164,14 @@ int main() {
     shellSortText.setFillColor(sf::Color::White);
     setText(shellSortText, 490, 530);
 
+    // error message: please select sort type
+    sf::Text errorMessageText;
+    errorMessageText.setFont(font2);
+    errorMessageText.setString("Please select a sort style.");
+    errorMessageText.setCharacterSize(20);
+    errorMessageText.setFillColor(sf::Color(143, 151, 121));
+    setText(errorMessageText, 140, 515);
+
     while(startWindow.isOpen()){
         sf::Event event;
 
@@ -231,7 +239,7 @@ int main() {
 
                     //IF NEXT ARROW IS PRESSED and a sort style is selected
                     auto nextArrowBound = nextArrow.getGlobalBounds();
-                    if(nextArrowBound.contains(event.mouseButton.x, event.mouseButton.y) && sortStyle != 0){
+                    if(nextArrowBound.contains(event.mouseButton.x, event.mouseButton.y)){
                         ////TODO: close out window and load results screen. "finalList" is where the matches are stored
                         if(sortStyle == 1){
                             // quickSort;
@@ -243,6 +251,7 @@ int main() {
                             for (SongList::Song song : finalList) {
                                 cout << song.artist << " " << song.track_name << " " << song.danceability << " " << song.energy << endl;
                             }
+                            cout << endl;
                         }
                         if(sortStyle == 2){
                             // shellSort
@@ -254,6 +263,12 @@ int main() {
                             for (SongList::Song song : finalList) {
                                 cout << song.artist << " " << song.track_name << " " << song.danceability << " " << song.energy << endl;
                             }
+                            cout << endl;
+                        }
+
+                        // if not sortStyle has been selected, display error message
+                        if(sortStyle == 0){
+                            errorMessageText.setFillColor(sf::Color(77,93,83));
                         }
                     }
                 }
@@ -281,6 +296,7 @@ int main() {
         startWindow.draw(selectText);
         startWindow.draw(quickSortText);
         startWindow.draw(shellSortText);
+        startWindow.draw(errorMessageText);
 
         startWindow.display();
 
