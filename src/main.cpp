@@ -18,6 +18,7 @@ void setText(sf::Text &text, float x, float y){
 	2. Add SFML functionality
 		a. Add some abstraction and classes to make things
 		easier, like a button and slider class
+		- NOTE: it takes in 3 variables to account for: danceability, energy, and a bool of explicit (yes/no)
 		b. Create UI designs for the program
 	3. Integrate the SFML functionality with the SongList
 	and user input
@@ -36,24 +37,39 @@ int main() {
 	SongList s(0.25, 0.75, true);
 	s.quicksort();
 	vector<SongList::Song> l = s.topTen();
-	for (SongList::Song song : l) {
+    for (SongList::Song song : l) {
 		cout << song.artist << " " << song.track_name << " " << song.danceability << " " << song.energy << endl;
 	}
-    // main window
-    sf::RenderWindow startWindow(sf::VideoMode(800, 600), "Start Window", sf::Style::Close);
-    sf::Font font;
 
+
+
+    // creating main window
+    sf::RenderWindow startWindow(sf::VideoMode(800, 600), "Start Window", sf::Style::Close);
+
+    // setting fonts
+    sf::Font font;
     if(!font.loadFromFile("..\\..\\files\\font1.ttf")){
         cout << "File not found.";
     }
+    sf::Font font2;
+    if(!font2.loadFromFile("..\\..\\files\\font2.ttf")){
+        cout << "File not found.";
+    }
 
+    //creating welcomeText
     sf::Text welcomeText;
     welcomeText.setFont(font);
     welcomeText.setString("SongSage: Tailored Tunes Just For You!");
     welcomeText.setCharacterSize(36);
     welcomeText.setFillColor(sf::Color(77,93,83));
     setText(welcomeText, 400, 100);
-
+    //creating instructionalText
+    sf::Text instructionalText;
+    instructionalText.setFont(font2);
+    instructionalText.setString("First, set your preferences.");
+    instructionalText.setCharacterSize(24);
+    instructionalText.setFillColor(sf::Color(77,93,83));
+    setText(instructionalText, 400, 200);
 
     while(startWindow.isOpen()){
         sf::Event event;
@@ -67,6 +83,7 @@ int main() {
         startWindow.clear(sf::Color(143, 151, 121));
 
         startWindow.draw(welcomeText);
+        startWindow.draw(instructionalText);
 
         startWindow.display();
 
