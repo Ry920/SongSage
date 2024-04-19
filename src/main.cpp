@@ -32,16 +32,30 @@ int main() {
 		cout << song.artist << " " << song.track_name << " " << song.danceability << " " << song.energy << endl;
 	}
     // main window
-    sf::Window startWindow(sf::VideoMode(800, 600), "Start Window");
+    sf::RenderWindow startWindow(sf::VideoMode(800, 600), "Start Window", sf::Style::Close);
+    sf::Font font;
+
+    if(!font.loadFromFile("files\\font.ttf")){
+        cout << "File not found.";
+    }
 
     while(startWindow.isOpen()){
         sf::Event event;
+
         while(startWindow.pollEvent(event)){
             if(event.type == sf::Event::Closed){
                 startWindow.close();
             }
         }
+
+        startWindow.clear(sf::Color(143, 151, 121));
+
+        startWindow.display();
+
+
     }
+
+
 
 	return 0;
 }
