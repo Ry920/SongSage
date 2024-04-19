@@ -4,6 +4,14 @@
 #include "songlist.hpp"
 using namespace std;
 
+// setText function from "Minesweeper" assignment created by Dr. Cruz Castro for COP3530, University of Florida, Summer 2023
+void setText(sf::Text &text, float x, float y){
+    sf::FloatRect textRect = text.getLocalBounds();
+    text.setOrigin(textRect.left + textRect.width/2.0f,
+                   textRect.top + textRect.height/2.0f);
+    text.setPosition(sf::Vector2f(x, y));
+}
+
 /*
 	Overall TODO:
 	1. Finish SongList functionality + sorting
@@ -35,9 +43,17 @@ int main() {
     sf::RenderWindow startWindow(sf::VideoMode(800, 600), "Start Window", sf::Style::Close);
     sf::Font font;
 
-    if(!font.loadFromFile("files\\font.ttf")){
+    if(!font.loadFromFile("..\\..\\files\\font1.ttf")){
         cout << "File not found.";
     }
+
+    sf::Text welcomeText;
+    welcomeText.setFont(font);
+    welcomeText.setString("SongSage: Tailored Tunes Just For You!");
+    welcomeText.setCharacterSize(36);
+    welcomeText.setFillColor(sf::Color(77,93,83));
+    setText(welcomeText, 400, 100);
+
 
     while(startWindow.isOpen()){
         sf::Event event;
@@ -49,6 +65,8 @@ int main() {
         }
 
         startWindow.clear(sf::Color(143, 151, 121));
+
+        startWindow.draw(welcomeText);
 
         startWindow.display();
 
