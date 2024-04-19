@@ -163,10 +163,18 @@ int main() {
                     auto slider1Bound = slider1.getGlobalBounds();
                     if(slider1Bound.contains(event.mouseButton.x, event.mouseButton.y)){
                         if(event.mouseButton.x >= 30 && event.mouseButton.x <= 280){
-                            cout << "clicked.";
                             toggle1.setPosition((float)event.mouseButton.x, 390);
                         }
 //                      ////TODO: Use "event.mouseButton.x" / 250 for the danceability variable
+                    }
+
+                    // IF ENERGY SLIDER IS MOVED:
+                    auto slider2Bound = slider2.getGlobalBounds();
+                    if(slider2Bound.contains(event.mouseButton.x, event.mouseButton.y)){
+                        if(event.mouseButton.x >= 300 && event.mouseButton.x <= 550){
+                            toggle2.setPosition((float)event.mouseButton.x, 390);
+                        }
+                        ////TODO: Use "event.mouseButton.x" / 250 for the energy variable
                     }
 
                     // IF EXPLICIT SWITCH IS PRESSED
