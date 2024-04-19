@@ -22,6 +22,8 @@ void setText(sf::Text &text, float x, float y){
 		b. Create UI designs for the program
 	3. Integrate the SFML functionality with the SongList
 	and user input
+    4. Ria adding this 4/18: Also include error message, if user doesnt select
+    one of the three varibles, include error message so they put it
 */
 
 // Testing by Ryan
@@ -58,6 +60,7 @@ int main() {
     sf::Text welcomeText;
     welcomeText.setFont(font);
     welcomeText.setString("SongSage: Tailored Tunes Just For You!");
+    welcomeText.setStyle(sf::Text::Underlined);
     welcomeText.setCharacterSize(36);
     welcomeText.setFillColor(sf::Color(77,93,83));
     setText(welcomeText, 400, 100);
@@ -67,11 +70,11 @@ int main() {
     instructionalText.setString("First, set your preferences.");
     instructionalText.setCharacterSize(24);
     instructionalText.setFillColor(sf::Color(77,93,83));
-    setText(instructionalText, 400, 200);
+    setText(instructionalText, 400, 250);
 
     // creating sliders
-    // needs to be 200 pixels long
-    // takes position divides by 200 and uses that as user input
+    // NOTE: they are 250 pixels long now
+    // takes position divides by 250 and uses that as user input
     // display input on top?
     sf::Texture slider;
     if(!slider.loadFromFile("..\\..\\files\\greenSlider.jpg")){
@@ -121,7 +124,30 @@ int main() {
     explicitText.setCharacterSize(24);
     explicitText.setFillColor(sf::Color::White);
     setText(explicitText, 690, 350);
-;
+
+    // SORT STYLE - select: quick sort or shell sort
+    sf::Text selectText;
+    selectText.setFont(font2);
+    selectText.setString("Select:");
+    selectText.setCharacterSize(24);
+    selectText.setFillColor(sf::Color::White);
+    setText(selectText, 420, 500);
+
+    sf::Text quickSortText;
+    quickSortText.setFont(font2);
+    quickSortText.setString("Quick Sort");
+    quickSortText.setCharacterSize(24);
+    quickSortText.setFillColor(sf::Color::White);
+    setText(quickSortText, 350, 530);
+
+    sf::Text shellSortText;
+    shellSortText.setFont(font2);
+    shellSortText.setString("Shell Sort");
+    shellSortText.setCharacterSize(24);
+    shellSortText.setFillColor(sf::Color::White);
+    setText(shellSortText, 490, 530);
+
+
 
     while(startWindow.isOpen()){
         sf::Event event;
@@ -133,10 +159,11 @@ int main() {
 
             if(event.type == sf::Event::MouseButtonPressed){
                 if(event.mouseButton.button == sf::Mouse::Left){
-                    auto explicitSwitchBouund = explicitSwitch.getGlobalBounds();
+
                     // IF EXPLICIT SWITCH IS PRESSED
+                    auto explicitSwitchBouund = explicitSwitch.getGlobalBounds();
                     if(explicitSwitchBouund.contains(event.mouseButton.x, event.mouseButton.y)){
-                        // Switch its texture to opposite texture
+                        // Switch its image to display oppite image
                         if(explicitSwitch.getTexture() == &onSwitch){
                             explicitSwitch.setTexture(offSwitch);
                             ////TODO: Set songlist's expl to false
@@ -147,6 +174,21 @@ int main() {
                         }
                     }
 
+                    //IF "QUICK SORT" IS PRESSED
+                    auto quickSortBound = quickSortText.getGlobalBounds();
+                    if(quickSortBound.contains(event.mouseButton.x, event.mouseButton.y)){
+                        quickSortText.setStyle(sf::Text::Underlined);
+                        shellSortText.setStyle(sf::Text::Regular);
+                        ////TODO: this would then be, for example, s.quickSort
+                    }
+
+                    //IF "SHELL SORT" IS PRESSED
+                    auto shellSortBound = shellSortText.getGlobalBounds();
+                    if(shellSortBound.contains(event.mouseButton.x, event.mouseButton.y)){
+                        shellSortText.setStyle(sf::Text::Underlined);
+                        quickSortText.setStyle(sf::Text::Regular);
+                        ////TODO: this would then be, for example, s.shellSort
+                    }
                 }
             }
         }
@@ -155,16 +197,24 @@ int main() {
 
         startWindow.draw(welcomeText);
         startWindow.draw(instructionalText);
+
         startWindow.draw(slider1);
         startWindow.draw(toggle1);
         startWindow.draw(danceabilityText);
+
         startWindow.draw(slider2);
         startWindow.draw(toggle2);
         startWindow.draw(energyText);
+
         startWindow.draw(explicitText);
         startWindow.draw(explicitSwitch);
 
+        startWindow.draw(selectText);
+        startWindow.draw(quickSortText);
+        startWindow.draw(shellSortText);
+
         startWindow.display();
+
     }
 
 
