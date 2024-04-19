@@ -41,8 +41,6 @@ int main() {
 		cout << song.artist << " " << song.track_name << " " << song.danceability << " " << song.energy << endl;
 	}
 
-
-
     // creating main window
     sf::RenderWindow startWindow(sf::VideoMode(800, 600), "Start Window", sf::Style::Close);
 
@@ -71,6 +69,41 @@ int main() {
     instructionalText.setFillColor(sf::Color(77,93,83));
     setText(instructionalText, 400, 200);
 
+    // creating sliders
+    // needs to be 200 pixels long
+    // takes position divides by 200 and uses that as user input
+    // display input on top?
+    sf::Texture slider;
+    if(!slider.loadFromFile("..\\..\\files\\greenSlider.jpg")){
+        cout << "Slider not found." << endl;
+    }
+    //SLIDER 1 - Danceability
+    sf::Sprite slider1;
+    slider1.setPosition(30, 400);
+    slider1.setTexture(slider);
+    sf::RectangleShape toggle1(sf::Vector2f(15.0f, 60.0f));
+    toggle1.setPosition(30, 390);
+    sf::Text danceabilityText;
+    danceabilityText.setFont(font2);
+    danceabilityText.setString("Danceability");
+    danceabilityText.setCharacterSize(24);
+    danceabilityText.setFillColor(sf::Color::White);
+    setText(danceabilityText, 150, 350);
+
+    //SLIDER 2 - Energy
+    sf::Sprite slider2;
+    slider2.setTexture(slider);
+    slider2.setPosition(300, 400);
+    sf::RectangleShape toggle2(sf::Vector2f(15.0f, 60.0f));
+    toggle2.setPosition(300, 390);
+    sf::Text energyText;
+    energyText.setFont(font2);
+    energyText.setString("Energy");
+    energyText.setCharacterSize(24);
+    energyText.setFillColor(sf::Color::White);
+    setText(energyText, 420, 350);
+
+
     while(startWindow.isOpen()){
         sf::Event event;
 
@@ -84,10 +117,14 @@ int main() {
 
         startWindow.draw(welcomeText);
         startWindow.draw(instructionalText);
+        startWindow.draw(slider1);
+        startWindow.draw(toggle1);
+        startWindow.draw(danceabilityText);
+        startWindow.draw(slider2);
+        startWindow.draw(toggle2);
+        startWindow.draw(energyText);
 
         startWindow.display();
-
-
     }
 
 
