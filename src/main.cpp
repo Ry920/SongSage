@@ -64,6 +64,7 @@ int main() {
     welcomeText.setCharacterSize(36);
     welcomeText.setFillColor(sf::Color(77,93,83));
     setText(welcomeText, 400, 100);
+
     //creating instructionalText
     sf::Text instructionalText;
     instructionalText.setFont(font2);
@@ -165,7 +166,7 @@ int main() {
                         if(event.mouseButton.x >= 30 && event.mouseButton.x <= 280){
                             toggle1.setPosition((float)event.mouseButton.x, 390);
                         }
-//                      ////TODO: Use "event.mouseButton.x" / 250 for the danceability variable
+//                      ////TODO: Use "event.mouseButton.x" - 30 / 250 for the danceability variable
                     }
 
                     // IF ENERGY SLIDER IS MOVED:
@@ -174,7 +175,7 @@ int main() {
                         if(event.mouseButton.x >= 300 && event.mouseButton.x <= 550){
                             toggle2.setPosition((float)event.mouseButton.x, 390);
                         }
-                        ////TODO: Use "event.mouseButton.x" / 250 for the energy variable
+                        ////TODO: Use "event.mouseButton.x" - 300 / 250 for the energy variable
                     }
 
                     // IF EXPLICIT SWITCH IS PRESSED
