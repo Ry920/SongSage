@@ -71,13 +71,18 @@ int main() {
     welcomeText.setFillColor(sf::Color(77,93,83));
     setText(welcomeText, 400, 100);
 
+    // creating rectangle for background
+    sf::RectangleShape rectangle1(sf::Vector2f(800,100));
+    rectangle1.setFillColor(sf::Color(206,216,199));
+    rectangle1.setPosition(0, 50);
+
     //creating instructionalText
     sf::Text instructionalText;
     instructionalText.setFont(font2);
     instructionalText.setString("First, set your preferences.");
     instructionalText.setCharacterSize(24);
     instructionalText.setFillColor(sf::Color(77,93,83));
-    setText(instructionalText, 400, 250);
+    setText(instructionalText, 400, 225);
 
     // creating sliders
     // NOTE: they are 250 pixels long now
@@ -278,6 +283,7 @@ int main() {
 
         startWindow.clear(sf::Color(143, 151, 121));
 
+        startWindow.draw(rectangle1);
         startWindow.draw(welcomeText);
         startWindow.draw(instructionalText);
 
@@ -315,13 +321,19 @@ int main() {
     topText.setStyle(sf::Text::Underlined);
     topText.setCharacterSize(36);
     topText.setFillColor(sf::Color::White);
-    setText(topText, 400, 75);
+    setText(topText, 400, 60);
 
     ////this is printing out the list in command line, you can delete in the final implementation
     for (SongList::Song song : finalList) {
         cout << song.artist << " " << song.track_name << " " << song.danceability << " " << song.energy << endl;
     }
     cout << endl;
+
+
+    // creating rectangle for background
+    sf::RectangleShape rectangle(sf::Vector2f(800,250));
+    rectangle.setFillColor(sf::Color(206,216,199));
+    rectangle.setPosition(0, 125);
 
 
     // creating result 1 text
@@ -385,9 +397,9 @@ int main() {
     sf::Text thankyouText;
     thankyouText.setFont(font2);
     thankyouText.setString("Thanks for using SongSage!");
-    thankyouText.setCharacterSize(24);
+    thankyouText.setCharacterSize(28);
     thankyouText.setFillColor(sf::Color(77,93,83));
-    setText(thankyouText, 400, 500);
+    setText(thankyouText, 400, 550);
 
     while(resultsWindow.isOpen()){
         sf::Event event;
@@ -401,6 +413,7 @@ int main() {
         // draws green background for window
         resultsWindow.clear(sf::Color(143, 151, 121));
         // draws results text
+        resultsWindow.draw(rectangle);
         resultsWindow.draw(topText);
         resultsWindow.draw(res1Text);
         resultsWindow.draw(res2Text);
