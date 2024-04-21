@@ -131,10 +131,10 @@ SongList::SongList(float maxDance, float maxEnergy, bool expl) {
 vector<SongList::Song> SongList::topTen() const {
 	// Create a list and allocate *up to* 10 songs
 	// Assume list is already sorted as needed
-	vector<SongList::Song> vec(10);
+	vector<SongList::Song> vec;
 	for (int i = 0; i < list.size(); i++) {
 		if (i == 10) break;
-		vec[i] = list[i];
+		vec.push_back(list[i]);
 	}
 	return vec;
 }
