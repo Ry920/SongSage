@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <fstream>
 #include <future>
+#include <chrono>
 #include "songlist.hpp"
 using namespace std;
 
@@ -253,8 +254,12 @@ int main() {
                                 // TODO: Loading Screen Here
                             }
                             SongList newList = fut.get();
+                            chrono::time_point<chrono::high_resolution_clock> start, end;
                             // quickSort;
+                            start = chrono::high_resolution_clock::now();
                             newList.quicksort();
+                            end = chrono::high_resolution_clock::now();
+                            cout << "Time: " << (end - start).count() << endl;
                             vector<SongList::Song> finalList = newList.topTen();
 
                             ////this is printing out the list in command line, you can delete in the final implementation
@@ -275,8 +280,12 @@ int main() {
                                 // TODO: Loading Screen Here
                             }
                             SongList newList = fut.get();
+                            chrono::time_point<chrono::high_resolution_clock> start, end;
                             // shellSort
+                            start = chrono::high_resolution_clock::now();
                             newList.shellsort();
+                            end = chrono::high_resolution_clock::now();
+                            cout << "Time: " << (end - start).count() << endl;
                             vector<SongList::Song> finalList = newList.topTen();
 
                             ////this is printing out the list in command line, you can delete in the final implementation
