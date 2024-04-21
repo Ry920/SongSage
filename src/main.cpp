@@ -1,6 +1,8 @@
 ﻿#include <iostream>
 #include <SFML/Graphics.hpp>
 #include <fstream>
+#include <chrono>
+#include <future>
 #include "songlist.hpp"
 using namespace std;
 
@@ -25,24 +27,7 @@ void setText(sf::Text &text, float x, float y){
     4. Ria adding this 4/18: Also include error message, if user doesnt select
     one of the three varibles, include error message so they put it
 */
-
-// Testing by Ryan
-/*
-	Results:
-	Quicksort and Shellsort work as intended, and so does the
-	maximum limits on the energy and danceability. Only problem is
-	that some songs end up in flipped orders between the two
-	sorts if they have the exact same sum. Probably fixable in
-	the implementation of either sort.
-*/
 int main() {
-
-	SongList s(0.25, 0.75, true);
-	s.quicksort();
-	vector<SongList::Song> l = s.topTen();
-//    for (SongList::Song song : l) {
-//		cout << song.artist << " " << song.track_name << " " << song.danceability << " " << song.energy << endl;
-//	}
     // set default values
     float danceability = 0.00;
     float energy = 0.00;
@@ -54,12 +39,14 @@ int main() {
 
     // setting fonts
     sf::Font font;
-    if(!font.loadFromFile("/Users/emmaherrero/CLionProjects/SongSage/files/font1.ttf")){
-        cout << "File not found.";
+    string path1 = "files/font1.ttf";
+    while (!font.loadFromFile(path1)) {
+        path1 = "../" + path1;
     }
     sf::Font font2;
-    if(!font2.loadFromFile("/Users/emmaherrero/CLionProjects/SongSage/files/font2.ttf")){
-        cout << "File not found.";
+    string path2 = "files/font1.ttf";
+    while (!font2.loadFromFile(path2)) {
+        path2 = "../" + path2;
     }
 
     //creating welcomeText
@@ -68,7 +55,7 @@ int main() {
     welcomeText.setString("SongSage: Tailored Tunes Just For You!");
     welcomeText.setStyle(sf::Text::Underlined);
     welcomeText.setCharacterSize(36);
-    welcomeText.setFillColor(sf::Color(77,93,83));
+    welcomeText.setFillColor(sf::Color(77, 93, 83));
     setText(welcomeText, 400, 100);
 
     // creating rectangle for background
@@ -89,8 +76,9 @@ int main() {
     // takes position divides by 250 and uses that as user input
     // display input on top?
     sf::Texture slider;
-    if(!slider.loadFromFile("/Users/emmaherrero/CLionProjects/SongSage/files/greenSlider.jpg")){
-        cout << "Slider not found." << endl;
+    string path3 = "files/greenSlider.jpg";
+    while (!slider.loadFromFile(path3)) {
+        path3 = "../" + path3;
     }
     //SLIDER 1 - Danceability
     sf::Sprite slider1;
@@ -121,8 +109,9 @@ int main() {
     // NEXT arrow
     sf::Sprite nextArrow;
     sf::Texture nextArrowGraphic;
-    if(!nextArrowGraphic.loadFromFile("/Users/emmaherrero/CLionProjects/SongSage/files/nextArrow.png")){
-        cout << "Next arrow not foud." << endl;
+    string path4 = "files/nextArrow.png";
+    while (!nextArrowGraphic.loadFromFile(path4)) {
+        path4 = "../" + path4;
     }
     nextArrow.setTexture(nextArrowGraphic);
     nextArrow.setPosition(630, 480);
@@ -130,12 +119,14 @@ int main() {
 
     // ON/OFF SWITCH - Explicit (YES/NO)
     sf::Texture onSwitch;
-    if(!onSwitch.loadFromFile("/Users/emmaherrero/CLionProjects/SongSage/files/on_toggle.png")){
-        cout << "Switch not found." << endl;
+    string path5 = "files/on_toggle.png";
+    while (!onSwitch.loadFromFile(path5)) {
+        path5 = "../" + path5;
     }
     sf::Texture offSwitch;
-    if(!offSwitch.loadFromFile("/Users/emmaherrero/CLionProjects/SongSage/files/off_toggle.png")){
-        cout << "Switch not found." << endl;
+    string path6 = "files/off_toggle.png";
+    while (!offSwitch.loadFromFile(path6)) {
+        path6 = "../" + path6;
     }
     sf::Sprite explicitSwitch;
     explicitSwitch.setTexture(onSwitch);
@@ -181,8 +172,8 @@ int main() {
     vector<SongList::Song> finalList;
     // used in results page
     string sortMethod;
-    ////TODO: make a timer to display time at end as a string, 5.04 is a placeholder
-    string time = "5.04";
+
+    string time = "";
 
     while(startWindow.isOpen()){
         sf::Event event;
@@ -191,6 +182,7 @@ int main() {
         while(startWindow.pollEvent(event)){
             if(event.type == sf::Event::Closed){
                 startWindow.close();
+                return 0;
             }
 
             if(event.type == sf::Event::MouseButtonPressed){
@@ -255,18 +247,46 @@ int main() {
                     if(nextArrowBound.contains(event.mouseButton.x, event.mouseButton.y)){
                         if(sortStyle == 1){
                             // quickSort;
-                            SongList newList(danceability, energy, explicitLanguage);
+                            future<SongList> fut = async(launch::async, [&] { return SongList(danceability, energy, explicitLanguage); });
+                            while (fut.wait_for(0ms) != future_status::ready) {
+                                while (startWindow.pollEvent(event)) {
+                                    if (event.type == sf::Event::Closed) {
+                                        startWindow.close();
+                                        return 0;
+                                    }
+                                }
+                                // TODO: Loading Screen Here
+                            }
+                            SongList newList = fut.get();
+                            chrono::time_point<chrono::high_resolution_clock> start, end;
+                            // quickSort;
+                            start = chrono::high_resolution_clock::now();
                             newList.quicksort();
+                            end = chrono::high_resolution_clock::now();
+                            time = to_string((end - start).count() / 1000000.0);
                             finalList = newList.topTen();
                             sortMethod = "quick sort";
-
-
                             startWindow.close();
                         }
                         if(sortStyle == 2){
                             // shellSort
-                            SongList newList(danceability, energy, explicitLanguage);
+                            future<SongList> fut = async(launch::async, [&] { return SongList(danceability, energy, explicitLanguage); });
+                            while (fut.wait_for(0ms) != future_status::ready) {
+                                while (startWindow.pollEvent(event)) {
+                                    if (event.type == sf::Event::Closed) {
+                                        startWindow.close();
+                                        return 0;
+                                    }
+                                }
+                                // TODO: Loading Screen Here
+                            }
+                            SongList newList = fut.get();
+                            chrono::time_point<chrono::high_resolution_clock> start, end;
+                            // shellSort
+                            start = chrono::high_resolution_clock::now();
                             newList.shellsort();
+                            end = chrono::high_resolution_clock::now();
+                            time = to_string((end - start).count() / 1000000.0);
                             finalList = newList.topTen();
                             sortMethod = "shell sort";
                             startWindow.close();
@@ -322,12 +342,6 @@ int main() {
     topText.setCharacterSize(36);
     topText.setFillColor(sf::Color::White);
     setText(topText, 400, 60);
-
-    ////this is printing out the list in command line, you can delete in the final implementation
-    for (SongList::Song song : finalList) {
-        cout << song.artist << " " << song.track_name << " " << song.danceability << " " << song.energy << endl;
-    }
-    cout << endl;
 
 
     // creating rectangle for background
@@ -387,7 +401,7 @@ int main() {
     // creating message1 text
     sf::Text message2Text;
     message2Text.setFont(font2);
-    message2Text.setString(time + " seconds using " + sortMethod);
+    message2Text.setString(time + " milliseconds using " + sortMethod);
     message2Text.setCharacterSize(20);
     message2Text.setFillColor(sf::Color::White);
     setText(message2Text, 400, 450);

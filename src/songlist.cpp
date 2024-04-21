@@ -53,13 +53,12 @@ SongList::SongList(float maxDance, float maxEnergy, bool expl) {
 	//			a. Implement with limits here so that 
 	//			the songs are loaded after the user's
 	//			choice is already made
-	string path = "/Users/emmaherrero/CLionProjects/SongSage/data/dataset.csv";
+	string path = "data/dataset.csv";
 	ifstream file(path);
 	// Relative path shenanigans
 	while (!file.is_open()) {
-		path = "..\\" + path;
+		path = "../" + path;
 		file = ifstream(path);
-        cout << "1";
 	}
 	string line;
 	getline(file, line); // Skip first line
@@ -103,6 +102,9 @@ SongList::SongList(float maxDance, float maxEnergy, bool expl) {
 		d = parseString(data);
 		data = data.substr(d.size() + 1);
 		song.expl = (d == "True");
+		if (song.expl && !expl) {
+			continue;
+		}
 
 		// Get danceability
 		d = parseString(data);
