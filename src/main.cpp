@@ -36,13 +36,13 @@ void setText(sf::Text &text, float x, float y){
 	the implementation of either sort.
 */
 int main() {
+
 	SongList s(0.25, 0.75, true);
 	s.quicksort();
 	vector<SongList::Song> l = s.topTen();
 //    for (SongList::Song song : l) {
 //		cout << song.artist << " " << song.track_name << " " << song.danceability << " " << song.energy << endl;
 //	}
-
     // set default values
     float danceability = 0.00;
     float energy = 0.00;
@@ -54,11 +54,11 @@ int main() {
 
     // setting fonts
     sf::Font font;
-    if(!font.loadFromFile("..\\..\\files\\font1.ttf")){
+    if(!font.loadFromFile("/Users/emmaherrero/CLionProjects/SongSage/files/font1.ttf")){
         cout << "File not found.";
     }
     sf::Font font2;
-    if(!font2.loadFromFile("..\\..\\files\\font2.ttf")){
+    if(!font2.loadFromFile("/Users/emmaherrero/CLionProjects/SongSage/files/font2.ttf")){
         cout << "File not found.";
     }
 
@@ -84,7 +84,7 @@ int main() {
     // takes position divides by 250 and uses that as user input
     // display input on top?
     sf::Texture slider;
-    if(!slider.loadFromFile("..\\..\\files\\greenSlider.jpg")){
+    if(!slider.loadFromFile("/Users/emmaherrero/CLionProjects/SongSage/files/greenSlider.jpg")){
         cout << "Slider not found." << endl;
     }
     //SLIDER 1 - Danceability
@@ -116,7 +116,7 @@ int main() {
     // NEXT arrow
     sf::Sprite nextArrow;
     sf::Texture nextArrowGraphic;
-    if(!nextArrowGraphic.loadFromFile("..\\..\\files\\nextArrow.png")){
+    if(!nextArrowGraphic.loadFromFile("/Users/emmaherrero/CLionProjects/SongSage/files/nextArrow.png")){
         cout << "Next arrow not foud." << endl;
     }
     nextArrow.setTexture(nextArrowGraphic);
@@ -125,11 +125,11 @@ int main() {
 
     // ON/OFF SWITCH - Explicit (YES/NO)
     sf::Texture onSwitch;
-    if(!onSwitch.loadFromFile("..\\..\\files\\on_toggle.png")){
+    if(!onSwitch.loadFromFile("/Users/emmaherrero/CLionProjects/SongSage/files/on_toggle.png")){
         cout << "Switch not found." << endl;
     }
     sf::Texture offSwitch;
-    if(!offSwitch.loadFromFile("..\\..\\files\\off_toggle.png")){
+    if(!offSwitch.loadFromFile("/Users/emmaherrero/CLionProjects/SongSage/files/off_toggle.png")){
         cout << "Switch not found." << endl;
     }
     sf::Sprite explicitSwitch;
@@ -172,8 +172,12 @@ int main() {
     errorMessageText.setFillColor(sf::Color(143, 151, 121));
     setText(errorMessageText, 140, 515);
 
+    // final list vector declared
+    vector<SongList::Song> finalList;
+
     while(startWindow.isOpen()){
         sf::Event event;
+
 
         while(startWindow.pollEvent(event)){
             if(event.type == sf::Event::Closed){
@@ -240,30 +244,21 @@ int main() {
                     //IF NEXT ARROW IS PRESSED and a sort style is selected
                     auto nextArrowBound = nextArrow.getGlobalBounds();
                     if(nextArrowBound.contains(event.mouseButton.x, event.mouseButton.y)){
-                        ////TODO: close out window and load results screen. "finalList" is where the matches are stored
                         if(sortStyle == 1){
                             // quickSort;
                             SongList newList(danceability, energy, explicitLanguage);
                             newList.quicksort();
-                            vector<SongList::Song> finalList = newList.topTen();
+                            finalList = newList.topTen();
 
-                            ////this is printing out the list in command line, you can delete in the final implementation
-                            for (SongList::Song song : finalList) {
-                                cout << song.artist << " " << song.track_name << " " << song.danceability << " " << song.energy << endl;
-                            }
-                            cout << endl;
+
+                            startWindow.close();
                         }
                         if(sortStyle == 2){
                             // shellSort
                             SongList newList(danceability, energy, explicitLanguage);
                             newList.shellsort();
-                            vector<SongList::Song> finalList = newList.topTen();
-
-                            ////this is printing out the list in command line, you can delete in the final implementation
-                            for (SongList::Song song : finalList) {
-                                cout << song.artist << " " << song.track_name << " " << song.danceability << " " << song.energy << endl;
-                            }
-                            cout << endl;
+                            finalList = newList.topTen();
+                            startWindow.close();
                         }
 
                         // if not sortStyle has been selected, display error message
@@ -302,7 +297,87 @@ int main() {
 
     }
 
+    // RESULTS WINDOW
 
+    // creating result window
+    sf::RenderWindow resultsWindow(sf::VideoMode(800, 600), "Song Sage - Results!",sf::Style::Close);
+
+    // creating top of result text
+    sf::Text topText;
+    topText.setFont(font);
+    topText.setString("Your Top 5 Recommended Songs Are:");
+    topText.setStyle(sf::Text::Underlined);
+    topText.setCharacterSize(36);
+    topText.setFillColor(sf::Color::White);
+    setText(topText, 400, 75);
+
+    ////this is printing out the list in command line, you can delete in the final implementation
+    for (SongList::Song song : finalList) {
+        cout << song.artist << " " << song.track_name << " " << song.danceability << " " << song.energy << endl;
+    }
+    cout << endl;
+
+    // creating result 1 text
+    sf::Text res1Text;
+    res1Text.setFont(font2);
+    res1Text.setString("1. " + finalList[0].track_name + " - " + finalList[0].artist);
+    res1Text.setCharacterSize(20);
+    res1Text.setFillColor(sf::Color(77,93,83));
+    setText(res1Text, 400, 150);
+
+    // creating result 2 text
+    sf::Text res2Text;
+    res2Text.setFont(font2);
+    res2Text.setString("2. " + finalList[1].track_name + " - " + finalList[1].artist);
+    res2Text.setCharacterSize(20);
+    res2Text.setFillColor(sf::Color(77,93,83));
+    setText(res2Text, 400, 200);
+
+    // creating result 3 text
+    sf::Text res3Text;
+    res3Text.setFont(font2);
+    res3Text.setString("3. " + finalList[2].track_name + " - " + finalList[2].artist);
+    res3Text.setCharacterSize(20);
+    res3Text.setFillColor(sf::Color(77,93,83));
+    setText(res3Text, 400, 250);
+
+    // creating result 4 text
+    sf::Text res4Text;
+    res4Text.setFont(font2);
+    res4Text.setString("4. " + finalList[3].track_name + " - " + finalList[3].artist);
+    res4Text.setCharacterSize(20);
+    res4Text.setFillColor(sf::Color(77,93,83));
+    setText(res4Text, 400, 300);
+
+    // creating result 5 text
+    sf::Text res5Text;
+    res5Text.setFont(font2);
+    res5Text.setString("5. " + finalList[4].track_name + " - " + finalList[4].artist);
+    res5Text.setCharacterSize(20);
+    res5Text.setFillColor(sf::Color(77,93,83));
+    setText(res5Text, 400, 350);
+
+    while(resultsWindow.isOpen()){
+        sf::Event event;
+
+        while(resultsWindow.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {
+                resultsWindow.close();
+            }
+        }
+
+        // draws green background for window
+        resultsWindow.clear(sf::Color(143, 151, 121));
+        // draws results text
+        resultsWindow.draw(topText);
+        resultsWindow.draw(res1Text);
+        resultsWindow.draw(res2Text);
+        resultsWindow.draw(res3Text);
+        resultsWindow.draw(res4Text);
+        resultsWindow.draw(res5Text);
+
+        resultsWindow.display();
+    }
 
 	return 0;
 }
