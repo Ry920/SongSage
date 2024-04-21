@@ -36,13 +36,6 @@ void setText(sf::Text &text, float x, float y){
 	the implementation of either sort.
 */
 int main() {
-	SongList s(0.25, 0.75, true);
-	s.quicksort();
-	vector<SongList::Song> l = s.topTen();
-//    for (SongList::Song song : l) {
-//		cout << song.artist << " " << song.track_name << " " << song.danceability << " " << song.energy << endl;
-//	}
-
     // set default values
     float danceability = 0.00;
     float energy = 0.00;
@@ -54,11 +47,11 @@ int main() {
 
     // setting fonts
     sf::Font font;
-    if(!font.loadFromFile("..\\..\\files\\font1.ttf")){
+    if(!font.loadFromFile("..\\..\\..\\..\\files\\font1.ttf")){
         cout << "File not found.";
     }
     sf::Font font2;
-    if(!font2.loadFromFile("..\\..\\files\\font2.ttf")){
+    if(!font2.loadFromFile("..\\..\\..\\..\\files\\font2.ttf")){
         cout << "File not found.";
     }
 
@@ -84,7 +77,7 @@ int main() {
     // takes position divides by 250 and uses that as user input
     // display input on top?
     sf::Texture slider;
-    if(!slider.loadFromFile("..\\..\\files\\greenSlider.jpg")){
+    if(!slider.loadFromFile("..\\..\\..\\..\\files\\greenSlider.jpg")){
         cout << "Slider not found." << endl;
     }
     //SLIDER 1 - Danceability
@@ -116,7 +109,7 @@ int main() {
     // NEXT arrow
     sf::Sprite nextArrow;
     sf::Texture nextArrowGraphic;
-    if(!nextArrowGraphic.loadFromFile("..\\..\\files\\nextArrow.png")){
+    if(!nextArrowGraphic.loadFromFile("..\\..\\..\\..\\files\\nextArrow.png")){
         cout << "Next arrow not foud." << endl;
     }
     nextArrow.setTexture(nextArrowGraphic);
@@ -125,11 +118,11 @@ int main() {
 
     // ON/OFF SWITCH - Explicit (YES/NO)
     sf::Texture onSwitch;
-    if(!onSwitch.loadFromFile("..\\..\\files\\on_toggle.png")){
+    if(!onSwitch.loadFromFile("..\\..\\..\\..\\files\\on_toggle.png")){
         cout << "Switch not found." << endl;
     }
     sf::Texture offSwitch;
-    if(!offSwitch.loadFromFile("..\\..\\files\\off_toggle.png")){
+    if(!offSwitch.loadFromFile("..\\..\\..\\..\\files\\off_toggle.png")){
         cout << "Switch not found." << endl;
     }
     sf::Sprite explicitSwitch;
