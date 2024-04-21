@@ -53,11 +53,11 @@ SongList::SongList(float maxDance, float maxEnergy, bool expl) {
 	//			a. Implement with limits here so that 
 	//			the songs are loaded after the user's
 	//			choice is already made
-	string path = "data\\dataset.csv";
+	string path = "data/dataset.csv";
 	ifstream file(path);
 	// Relative path shenanigans
 	while (!file.is_open()) {
-		path = "..\\" + path;
+		path = "../" + path;
 		file = ifstream(path);
 	}
 	string line;
@@ -103,6 +103,10 @@ SongList::SongList(float maxDance, float maxEnergy, bool expl) {
 		data = data.substr(d.size() + 1);
 		song.expl = (d == "True");
 
+		if (song.expl && !expl) {
+			continue;
+		}
+
 		// Get danceability
 		d = parseString(data);
 		data = data.substr(d.size() + 1);
@@ -135,7 +139,7 @@ vector<SongList::Song> SongList::topTen() const {
 	return vec;
 }
 
-// These sorts for some reason do give different resutls
+// These sorts for some reason do give different results
 // sometimes, probably due to sorting over the sum.
 // Might need to address.
 

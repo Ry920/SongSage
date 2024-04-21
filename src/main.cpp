@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 #include <SFML/Graphics.hpp>
 #include <fstream>
+#include <future>
 #include "songlist.hpp"
 using namespace std;
 
@@ -47,12 +48,14 @@ int main() {
 
     // setting fonts
     sf::Font font;
-    if(!font.loadFromFile("..\\..\\..\\..\\files\\font1.ttf")){
-        cout << "File not found.";
+    string path1 = "files/font1.ttf";
+    while (!font.loadFromFile(path1)) {
+        path1 = "../" + path1;
     }
     sf::Font font2;
-    if(!font2.loadFromFile("..\\..\\..\\..\\files\\font2.ttf")){
-        cout << "File not found.";
+    string path2 = "files/font1.ttf";
+    while (!font2.loadFromFile(path2)) {
+        path2 = "../" + path2;
     }
 
     //creating welcomeText
@@ -77,8 +80,9 @@ int main() {
     // takes position divides by 250 and uses that as user input
     // display input on top?
     sf::Texture slider;
-    if(!slider.loadFromFile("..\\..\\..\\..\\files\\greenSlider.jpg")){
-        cout << "Slider not found." << endl;
+    string path3 = "files/greenSlider.jpg";
+    while (!slider.loadFromFile(path3)) {
+        path3 = "../" + path3;
     }
     //SLIDER 1 - Danceability
     sf::Sprite slider1;
@@ -109,7 +113,11 @@ int main() {
     // NEXT arrow
     sf::Sprite nextArrow;
     sf::Texture nextArrowGraphic;
-    if(!nextArrowGraphic.loadFromFile("..\\..\\..\\..\\files\\nextArrow.png")){
+    string path4 = "files/greenSlider.jpg";
+    while (!nextArrowGraphic.loadFromFile(path4)) {
+        path4 = "../" + path4;
+    }
+    if(!nextArrowGraphic.loadFromFile("../../../../files/nextArrow.png")){
         cout << "Next arrow not foud." << endl;
     }
     nextArrow.setTexture(nextArrowGraphic);
@@ -118,11 +126,11 @@ int main() {
 
     // ON/OFF SWITCH - Explicit (YES/NO)
     sf::Texture onSwitch;
-    if(!onSwitch.loadFromFile("..\\..\\..\\..\\files\\on_toggle.png")){
+    if(!onSwitch.loadFromFile("../../../../files/on_toggle.png")){
         cout << "Switch not found." << endl;
     }
     sf::Texture offSwitch;
-    if(!offSwitch.loadFromFile("..\\..\\..\\..\\files\\off_toggle.png")){
+    if(!offSwitch.loadFromFile("../../../../files/off_toggle.png")){
         cout << "Switch not found." << endl;
     }
     sf::Sprite explicitSwitch;
@@ -235,8 +243,18 @@ int main() {
                     if(nextArrowBound.contains(event.mouseButton.x, event.mouseButton.y)){
                         ////TODO: close out window and load results screen. "finalList" is where the matches are stored
                         if(sortStyle == 1){
+                            future<SongList> fut = async(launch::async, [&]{ return SongList(danceability, energy, explicitLanguage); });
+                            while (fut.wait_for(0ms) != future_status::ready) {
+                                while (startWindow.pollEvent(event)) {
+                                    if (event.type == sf::Event::Closed) {
+                                        startWindow.close();
+                                        return 0;
+                                    }
+                                    // TODO: Loading Screen Here
+                                }
+                            }
+                            SongList newList = fut.get();
                             // quickSort;
-                            SongList newList(danceability, energy, explicitLanguage);
                             newList.quicksort();
                             vector<SongList::Song> finalList = newList.topTen();
 
@@ -247,8 +265,18 @@ int main() {
                             cout << endl;
                         }
                         if(sortStyle == 2){
+                            future<SongList> fut = async(launch::async, [&] { return SongList(danceability, energy, explicitLanguage); });
+                            while (fut.wait_for(0ms) != future_status::ready) {
+                                while (startWindow.pollEvent(event)) {
+                                    if (event.type == sf::Event::Closed) {
+                                        startWindow.close();
+                                        return 0;
+                                    }
+                                    // TODO: Loading Screen Here
+                                }
+                            }
+                            SongList newList = fut.get();
                             // shellSort
-                            SongList newList(danceability, energy, explicitLanguage);
                             newList.shellsort();
                             vector<SongList::Song> finalList = newList.topTen();
 
