@@ -174,6 +174,10 @@ int main() {
 
     // final list vector declared
     vector<SongList::Song> finalList;
+    // used in results page
+    string sortMethod;
+    ////TODO: make a timer to display time at end as a string, 5.04 is a placeholder
+    string time = "5.04";
 
     while(startWindow.isOpen()){
         sf::Event event;
@@ -249,6 +253,7 @@ int main() {
                             SongList newList(danceability, energy, explicitLanguage);
                             newList.quicksort();
                             finalList = newList.topTen();
+                            sortMethod = "quick sort";
 
 
                             startWindow.close();
@@ -258,6 +263,7 @@ int main() {
                             SongList newList(danceability, energy, explicitLanguage);
                             newList.shellsort();
                             finalList = newList.topTen();
+                            sortMethod = "shell sort";
                             startWindow.close();
                         }
 
@@ -317,6 +323,7 @@ int main() {
     }
     cout << endl;
 
+
     // creating result 1 text
     sf::Text res1Text;
     res1Text.setFont(font2);
@@ -357,6 +364,31 @@ int main() {
     res5Text.setFillColor(sf::Color(77,93,83));
     setText(res5Text, 400, 350);
 
+    // creating message1 text
+    sf::Text message1Text;
+    message1Text.setFont(font2);
+    message1Text.setString("Finding your perfect recommendations took");
+    message1Text.setCharacterSize(20);
+    message1Text.setFillColor(sf::Color::White);
+    setText(message1Text, 400, 425);
+
+    // creating message1 text
+    sf::Text message2Text;
+    message2Text.setFont(font2);
+    message2Text.setString(time + " seconds using " + sortMethod);
+    message2Text.setCharacterSize(20);
+    message2Text.setFillColor(sf::Color::White);
+    setText(message2Text, 400, 450);
+
+
+    // creating thank you text
+    sf::Text thankyouText;
+    thankyouText.setFont(font2);
+    thankyouText.setString("Thanks for using SongSage!");
+    thankyouText.setCharacterSize(24);
+    thankyouText.setFillColor(sf::Color(77,93,83));
+    setText(thankyouText, 400, 500);
+
     while(resultsWindow.isOpen()){
         sf::Event event;
 
@@ -375,6 +407,9 @@ int main() {
         resultsWindow.draw(res3Text);
         resultsWindow.draw(res4Text);
         resultsWindow.draw(res5Text);
+        resultsWindow.draw(message1Text);
+        resultsWindow.draw(message2Text);
+        resultsWindow.draw(thankyouText);
 
         resultsWindow.display();
     }
