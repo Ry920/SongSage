@@ -113,12 +113,9 @@ int main() {
     // NEXT arrow
     sf::Sprite nextArrow;
     sf::Texture nextArrowGraphic;
-    string path4 = "files/greenSlider.jpg";
+    string path4 = "files/nextArrow.png";
     while (!nextArrowGraphic.loadFromFile(path4)) {
         path4 = "../" + path4;
-    }
-    if(!nextArrowGraphic.loadFromFile("../../../../files/nextArrow.png")){
-        cout << "Next arrow not foud." << endl;
     }
     nextArrow.setTexture(nextArrowGraphic);
     nextArrow.setPosition(630, 480);
@@ -126,12 +123,14 @@ int main() {
 
     // ON/OFF SWITCH - Explicit (YES/NO)
     sf::Texture onSwitch;
-    if(!onSwitch.loadFromFile("../../../../files/on_toggle.png")){
-        cout << "Switch not found." << endl;
+    string path5 = "files/on_toggle.png";
+    while (!onSwitch.loadFromFile(path5)) {
+        path5 = "../" + path5;
     }
     sf::Texture offSwitch;
-    if(!offSwitch.loadFromFile("../../../../files/off_toggle.png")){
-        cout << "Switch not found." << endl;
+    string path6 = "files/off_toggle.png";
+    while (!offSwitch.loadFromFile(path6)) {
+        path6 = "../" + path6;
     }
     sf::Sprite explicitSwitch;
     explicitSwitch.setTexture(onSwitch);
