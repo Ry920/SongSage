@@ -249,8 +249,8 @@ int main() {
                                         startWindow.close();
                                         return 0;
                                     }
-                                    // TODO: Loading Screen Here
                                 }
+                                // TODO: Loading Screen Here
                             }
                             SongList newList = fut.get();
                             // quickSort;
@@ -271,8 +271,8 @@ int main() {
                                         startWindow.close();
                                         return 0;
                                     }
-                                    // TODO: Loading Screen Here
                                 }
+                                // TODO: Loading Screen Here
                             }
                             SongList newList = fut.get();
                             // shellSort
