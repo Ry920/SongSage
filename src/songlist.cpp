@@ -56,7 +56,7 @@ int SongList::partition(int low, int high) {
 SongList::SongList(float maxDance, float maxEnergy, bool expl) {
 	// Keep track of track ID's since they are unique
 	unordered_set<string> track_ids;
-
+	unordered_set<string> artist_track;
 	string path = "data/dataset.csv";
 	ifstream file(path);
 	// Relative path shenanigans
@@ -92,6 +92,14 @@ SongList::SongList(float maxDance, float maxEnergy, bool expl) {
 		d = parseString(data);
 		data = data.substr(d.size() + 1);
 		song.track_name = d;
+		
+		// Some songs are repeat even with unique IDs. Add the artist + track name
+		// to an unordered set and if the current song's artist + track name is in
+		// the set, then we have a unqique ID repeated song. 
+		if (artist_track.find(song.artist + song.track_name) != artist_track.end()) {
+			continue;
+		}
+		artist_track.insert(song.artist + song.track_name);
 
 		// Skip popularity
 		d = parseString(data);

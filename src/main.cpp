@@ -431,40 +431,81 @@ int main() {
 
     // creating result 1 text
     sf::Text res1Text;
+    string res1_track = finalList[0].track_name;
+    string res1_artist = finalList[0].artist;
+    if (res1_track.size() > 40) {
+        res1_track = res1_track.substr(0, 37) + "...";
+    }
+    if (res1_artist.size() > 40) {
+        res1_artist = res1_artist.substr(0, 37) + "...";
+    }
+    string text1 = "1. " + res1_track + " - " + res1_artist;
     res1Text.setFont(font2);
-    res1Text.setString("1. " + finalList[0].track_name + " - " + finalList[0].artist);
+    res1Text.setString("1. " + res1_track + " - " + res1_artist);
     res1Text.setCharacterSize(20);
     res1Text.setFillColor(sf::Color(77,93,83));
     setText(res1Text, 400, 150);
 
     // creating result 2 text
     sf::Text res2Text;
+    string res2_track = finalList[1].track_name;
+    string res2_artist = finalList[1].artist;
+    if (res2_track.size() > 40) {
+        res2_track = res2_track.substr(0, 37) + "...";
+    }
+    if (res2_artist.size() > 40) {
+        res2_artist = res2_artist.substr(0, 37) + "...";
+    }
     res2Text.setFont(font2);
-    res2Text.setString("2. " + finalList[1].track_name + " - " + finalList[1].artist);
+    res2Text.setString("2. " + res2_track + " - " + res2_artist);
     res2Text.setCharacterSize(20);
     res2Text.setFillColor(sf::Color(77,93,83));
     setText(res2Text, 400, 200);
 
     // creating result 3 text
     sf::Text res3Text;
+    string res3_track = finalList[2].track_name;
+    string res3_artist = finalList[2].artist;
+    if (res3_track.size() > 40) {
+        res3_track = res3_track.substr(0, 37) + "...";
+    }
+    if (res3_artist.size() > 40) {
+        res3_artist = res3_artist.substr(0, 37) + "...";
+    }
     res3Text.setFont(font2);
-    res3Text.setString("3. " + finalList[2].track_name + " - " + finalList[2].artist);
+    res3Text.setString("3. " + res3_track + " - " + res3_artist);
     res3Text.setCharacterSize(20);
     res3Text.setFillColor(sf::Color(77,93,83));
     setText(res3Text, 400, 250);
 
     // creating result 4 text
     sf::Text res4Text;
+    string res4_track = finalList[3].track_name;
+    string res4_artist = finalList[3].artist;
+    if (res4_track.size() > 40) {
+        res4_track = res4_track.substr(0, 37) + "...";
+    }
+    if (res4_artist.size() > 40) {
+        res4_artist = res4_artist.substr(0, 37) + "...";
+    }
     res4Text.setFont(font2);
-    res4Text.setString("4. " + finalList[3].track_name + " - " + finalList[3].artist);
+    res4Text.setString("4. " + res4_track + " - " + res4_artist);
     res4Text.setCharacterSize(20);
     res4Text.setFillColor(sf::Color(77,93,83));
     setText(res4Text, 400, 300);
 
     // creating result 5 text
     sf::Text res5Text;
+    string res5_track = finalList[4].track_name;
+    string res5_artist = finalList[4].artist;
+    if (res5_track.size() > 40) {
+        res5_track = res5_track.substr(0, 37) + "...";
+    }
+    if (res5_artist.size() > 40) {
+        res5_artist = res5_artist.substr(0, 37) + "...";
+    }
     res5Text.setFont(font2);
-    res5Text.setString("5. " + finalList[4].track_name + " - " + finalList[4].artist);
+    res5Text.setString("5. " + res5_track + " - " + res5_artist);
     res5Text.setCharacterSize(20);
     res5Text.setFillColor(sf::Color(77,93,83));
     setText(res5Text, 400, 350);
