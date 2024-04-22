@@ -20,7 +20,7 @@ FetchContent_Declare(SFML
 FetchContent_MakeAvailable(SFML)
 
 # Add source to this project's executable.
-add_executable (SongSage src/main.cpp src/songlist.cpp src/Button.cpp)
+add_executable (SongSage src/main.cpp src/songlist.cpp)
 target_link_libraries(SongSage PRIVATE sfml-graphics sfml-system)
 target_compile_features(SongSage PRIVATE cxx_std_17)
 
