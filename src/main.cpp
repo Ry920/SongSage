@@ -439,7 +439,6 @@ int main() {
     if (res1_artist.size() > 40) {
         res1_artist = res1_artist.substr(0, 37) + "...";
     }
-    string text1 = "1. " + res1_track + " - " + res1_artist;
     res1Text.setFont(font2);
     res1Text.setString("1. " + res1_track + " - " + res1_artist);
     res1Text.setCharacterSize(20);
