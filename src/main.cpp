@@ -433,14 +433,15 @@ int main() {
     sf::Text res1Text;
     string res1_track = finalList[0].track_name;
     string res1_artist = finalList[0].artist;
-    if (res1_track.size() > 40) {
-        res1_track = res1_track.substr(0, 37) + "...";
+    if (res1_track.size() > 35) {
+        res1_track = res1_track.substr(0, 32) + "...";
     }
-    if (res1_artist.size() > 40) {
-        res1_artist = res1_artist.substr(0, 37) + "...";
+    if (res1_artist.size() > 35) {
+        res1_artist = res1_artist.substr(0, 32) + "...";
     }
+    string result1 = "1. " + res1_track + " - " + res1_artist;
     res1Text.setFont(font2);
-    res1Text.setString("1. " + res1_track + " - " + res1_artist);
+    res1Text.setString(sf::String::fromUtf32(result1.begin(), result1.end()));
     res1Text.setCharacterSize(20);
     res1Text.setFillColor(sf::Color(77,93,83));
     setText(res1Text, 400, 150);
@@ -449,14 +450,15 @@ int main() {
     sf::Text res2Text;
     string res2_track = finalList[1].track_name;
     string res2_artist = finalList[1].artist;
-    if (res2_track.size() > 40) {
-        res2_track = res2_track.substr(0, 37) + "...";
+    if (res2_track.size() > 35) {
+        res2_track = res2_track.substr(0, 32) + "...";
     }
-    if (res2_artist.size() > 40) {
-        res2_artist = res2_artist.substr(0, 37) + "...";
+    if (res2_artist.size() > 35) {
+        res2_artist = res2_artist.substr(0, 32) + "...";
     }
+    string result2 = "2. " + res2_track + " - " + res2_artist;
     res2Text.setFont(font2);
-    res2Text.setString("2. " + res2_track + " - " + res2_artist);
+    res2Text.setString(sf::String::fromUtf32(result2.begin(), result2.end()));
     res2Text.setCharacterSize(20);
     res2Text.setFillColor(sf::Color(77,93,83));
     setText(res2Text, 400, 200);
@@ -465,14 +467,15 @@ int main() {
     sf::Text res3Text;
     string res3_track = finalList[2].track_name;
     string res3_artist = finalList[2].artist;
-    if (res3_track.size() > 40) {
-        res3_track = res3_track.substr(0, 37) + "...";
+    if (res3_track.size() > 35) {
+        res3_track = res3_track.substr(0, 32) + "...";
     }
-    if (res3_artist.size() > 40) {
-        res3_artist = res3_artist.substr(0, 37) + "...";
+    if (res3_artist.size() > 35) {
+        res3_artist = res3_artist.substr(0, 32) + "...";
     }
+    string result3 = "3. " + res3_track + " - " + res3_artist;
     res3Text.setFont(font2);
-    res3Text.setString("3. " + res3_track + " - " + res3_artist);
+    res3Text.setString(sf::String::fromUtf32(result3.begin(), result3.end()));
     res3Text.setCharacterSize(20);
     res3Text.setFillColor(sf::Color(77,93,83));
     setText(res3Text, 400, 250);
@@ -481,14 +484,15 @@ int main() {
     sf::Text res4Text;
     string res4_track = finalList[3].track_name;
     string res4_artist = finalList[3].artist;
-    if (res4_track.size() > 40) {
-        res4_track = res4_track.substr(0, 37) + "...";
+    if (res4_track.size() > 35) {
+        res4_track = res4_track.substr(0, 32) + "...";
     }
-    if (res4_artist.size() > 40) {
-        res4_artist = res4_artist.substr(0, 37) + "...";
+    if (res4_artist.size() > 35) {
+        res4_artist = res4_artist.substr(0, 32) + "...";
     }
+    string result4 = "4. " + res4_track + " - " + res4_artist;
     res4Text.setFont(font2);
-    res4Text.setString("4. " + res4_track + " - " + res4_artist);
+    res4Text.setString(sf::String::fromUtf32(result4.begin(), result4.end()));
     res4Text.setCharacterSize(20);
     res4Text.setFillColor(sf::Color(77,93,83));
     setText(res4Text, 400, 300);
@@ -497,14 +501,15 @@ int main() {
     sf::Text res5Text;
     string res5_track = finalList[4].track_name;
     string res5_artist = finalList[4].artist;
-    if (res5_track.size() > 40) {
-        res5_track = res5_track.substr(0, 37) + "...";
+    if (res5_track.size() > 35) {
+        res5_track = res5_track.substr(0, 32) + "...";
     }
-    if (res5_artist.size() > 40) {
-        res5_artist = res5_artist.substr(0, 37) + "...";
+    if (res5_artist.size() > 35) {
+        res5_artist = res5_artist.substr(0, 32) + "...";
     }
+    string result5 = "5. " + res5_track + " - " + res5_artist;
     res5Text.setFont(font2);
-    res5Text.setString("5. " + res5_track + " - " + res5_artist);
+    res5Text.setString(sf::String::fromUtf32(result5.begin(), result5.end()));
     res5Text.setCharacterSize(20);
     res5Text.setFillColor(sf::Color(77,93,83));
     setText(res5Text, 400, 350);
