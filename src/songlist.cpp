@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream> // delete later
+#include <codecvt>
 #include "songlist.hpp"
 using namespace std;
 
@@ -55,23 +56,24 @@ int SongList::partition(int low, int high) {
 
 SongList::SongList(float maxDance, float maxEnergy, bool expl) {
 	// Keep track of track ID's since they are unique
-	unordered_set<string> track_ids;
-	unordered_set<string> artist_track;
+	unordered_set<wstring> track_ids;
+	unordered_set<wstring> artist_track;
 	string path = "data/dataset.csv";
-	ifstream file(path);
+	wifstream file(path);
 	// Relative path shenanigans
 	while (!file.is_open()) {
 		path = "../" + path;
-		file = ifstream(path);
+		file = wifstream(path);
 	}
-	string line;
+	file.imbue(locale(locale::empty(), new codecvt_utf8<wchar_t, 0x10ffff, consume_header>));
+	wstring line;
 	getline(file, line); // Skip first line
 	while (getline(file, line)) {
-		stringstream ss(line);
+		wstringstream ss(line);
 		Song song;
-		string data;
-		getline(ss, data, ',');
-		getline(ss, data, ','); // Track id
+		wstring data;
+		getline(ss, data, L',');
+		getline(ss, data, L','); // Track id
 		if (track_ids.find(data) != track_ids.end()) {
 			continue;
 		}
@@ -79,7 +81,7 @@ SongList::SongList(float maxDance, float maxEnergy, bool expl) {
 		getline(ss, data); // Get rest of line
 
 		// Get artist
-		string d = parseString(data);
+		wstring d = parseString(data);
 		data = data.substr(d.size() + 1);
 		song.artist = d;
 
@@ -113,7 +115,7 @@ SongList::SongList(float maxDance, float maxEnergy, bool expl) {
 		// Get explicit
 		d = parseString(data);
 		data = data.substr(d.size() + 1);
-		song.expl = (d == "True");
+		song.expl = (d == L"True");
 		if (song.expl && !expl) {
 			continue;
 		}

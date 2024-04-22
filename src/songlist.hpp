@@ -22,9 +22,9 @@ using namespace std;
 class SongList {
 public:
 	struct Song {
-		string artist;
-		string album_name;
-		string track_name;
+		wstring artist;
+		wstring album_name;
+		wstring track_name;
 		int duration_ms;
 		bool expl;
 		float danceability;
@@ -36,29 +36,29 @@ public: // Make private when done testing
 	void qsorthelper(int low, int high);
 	int partition(int low, int high);
 	// Helper to parse CSV data
-	static string parseString(string data) {
-		string s = "";
+	static wstring parseString(wstring data) {
+		wstring s = L"";
 		bool quotes = false;
 		int quotenum = 0;
 		for (int i = 0; i < data.size(); i++) {
 			// If a quote is reached and quotes haven't been reached before
 			// set quotes to true
-			if (data[i] == '"' && !quotes) {
+			if (data[i] == L'"' && !quotes) {
 				quotes = true;
 			}
 			// If a quote is reached and quotes have been reached before, add it
-			if (data[i] == '"' && quotes) {
+			if (data[i] == L'"' && quotes) {
 				quotenum++;
 			}
 			// If quotes are in the parsing string and the current character is a quote
 			// and the next character is a comma and the number of quotes is even, then
 			// that must be the last quote. Add it to the string and break.
-			if (quotes && data[i] == '"' && data[i + 1] == ',' && quotenum % 2 == 0) {
+			if (quotes && data[i] == L'"' && data[i + 1] == L',' && quotenum % 2 == 0) {
 				s += data[i];
 				break;
 			}
 			// If no quotes and comma reached, break
-			if (!quotes && data[i] == ',') {
+			if (!quotes && data[i] == L',') {
 				break;
 			}
 			// Add character
