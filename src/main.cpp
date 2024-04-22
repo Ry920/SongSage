@@ -247,22 +247,62 @@ int main() {
                     if(nextArrowBound.contains(event.mouseButton.x, event.mouseButton.y)){
                         if(sortStyle == 1){
                             // quickSort;
+                            // Start async process to build list
                             future<SongList> fut = async(launch::async, [&] { return SongList(danceability, energy, explicitLanguage); });
+                            string load = "Loading   ";
+                            sf::Text loading;
+                            loading.setFont(font2);
+                            loading.setString(load);
+                            loading.setCharacterSize(50);
+                            loading.setFillColor(sf::Color(77, 93, 83));
+                            setText(loading, 400, 300);
+                            chrono::time_point<chrono::system_clock> s, e;
+                            s = chrono::system_clock::now();
+                            // While list is building, allow window actions to be performed
+                            // Display loading screen
                             while (fut.wait_for(0ms) != future_status::ready) {
+                                e = chrono::system_clock::now();
+                                loading.setString(load);
                                 while (startWindow.pollEvent(event)) {
                                     if (event.type == sf::Event::Closed) {
                                         startWindow.close();
                                         return 0;
                                     }
                                 }
-                                // TODO: Loading Screen Here
+                                startWindow.clear(sf::Color(143, 151, 121));
+                                startWindow.draw(loading);
+                                startWindow.display();
+                                // Have a ... cycle every second, one . per 1/3 second
+                                if (load.size() >= 10 && (e - s).count() / 10000 >= 333) {
+                                    load = "Loading";
+                                    s = chrono::system_clock::now();
+                                }
+                                else if ((e - s).count() / 10000 >= 333) {
+                                    load += ".";
+                                    s = chrono::system_clock::now();
+                                }
                             }
                             SongList newList = fut.get();
                             chrono::time_point<chrono::high_resolution_clock> start, end;
-                            // quickSort;
+                            // Start timer on quicksort
                             start = chrono::high_resolution_clock::now();
+
+                            // Replace loading screen with "sorting" screen
+                            sf::Text sort;
+                            sort.setFont(font2);
+                            sort.setString("Sorting...");
+                            sort.setCharacterSize(50);
+                            sort.setFillColor(sf::Color(77, 93, 83));
+                            setText(sort, 400, 300);
+                            startWindow.clear(sf::Color(143, 151, 121));
+                            startWindow.draw(sort);
+                            startWindow.display();
+
                             newList.quicksort();
+                            // End timer on quicksort
                             end = chrono::high_resolution_clock::now();
+
+                            // Grab time elapsed
                             time = to_string((end - start).count() / 1000000.0);
                             finalList = newList.topTen();
                             sortMethod = "quick sort";
@@ -270,22 +310,61 @@ int main() {
                         }
                         if(sortStyle == 2){
                             // shellSort
+                            // Start async process to build song list
                             future<SongList> fut = async(launch::async, [&] { return SongList(danceability, energy, explicitLanguage); });
+                            string load = "Loading   ";
+                            sf::Text loading;
+                            loading.setFont(font2);
+                            loading.setString(load);
+                            loading.setCharacterSize(50);
+                            loading.setFillColor(sf::Color(77, 93, 83));
+                            setText(loading, 400, 300);
+                            chrono::time_point<chrono::system_clock> s, e;
+                            s = chrono::system_clock::now();
+                            // While list is building, allow window actions to be performed
+                            // Display loading screen
                             while (fut.wait_for(0ms) != future_status::ready) {
+                                e = chrono::system_clock::now();
+                                loading.setString(load);
                                 while (startWindow.pollEvent(event)) {
                                     if (event.type == sf::Event::Closed) {
                                         startWindow.close();
                                         return 0;
                                     }
                                 }
-                                // TODO: Loading Screen Here
+                                startWindow.clear(sf::Color(143, 151, 121));
+                                startWindow.draw(loading);
+                                startWindow.display();
+                                // Have a ... cycle every second, one . per 1/3 second
+                                if (load.size() >= 10 && (e - s).count() / 10000 >= 333) {
+                                    load = "Loading";
+                                    s = chrono::system_clock::now();
+                                }
+                                else if ((e - s).count() / 10000 >= 333) {
+                                    load += ".";
+                                    s = chrono::system_clock::now();
+                                }
                             }
                             SongList newList = fut.get();
                             chrono::time_point<chrono::high_resolution_clock> start, end;
-                            // shellSort
+                            // Start timer on shellsort
                             start = chrono::high_resolution_clock::now();
+                            
+                            // Replace loading screen with "sorting" screen
+                            sf::Text sort;
+                            sort.setFont(font2);
+                            sort.setString("Sorting...");
+                            sort.setCharacterSize(50);
+                            sort.setFillColor(sf::Color(77, 93, 83));
+                            setText(sort, 400, 300);
+                            startWindow.clear(sf::Color(143, 151, 121));
+                            startWindow.draw(sort);
+                            startWindow.display();
+
                             newList.shellsort();
+                            // End timer on shellsort
                             end = chrono::high_resolution_clock::now();
+                            // Get time elapsed
                             time = to_string((end - start).count() / 1000000.0);
                             finalList = newList.topTen();
                             sortMethod = "shell sort";

@@ -35,24 +35,33 @@ public: // Make private when done testing
 	vector<Song> list;
 	void qsorthelper(int low, int high);
 	int partition(int low, int high);
+	// Helper to parse CSV data
 	static string parseString(string data) {
 		string s = "";
 		bool quotes = false;
 		int quotenum = 0;
 		for (int i = 0; i < data.size(); i++) {
+			// If a quote is reached and quotes haven't been reached before
+			// set quotes to true
 			if (data[i] == '"' && !quotes) {
 				quotes = true;
 			}
+			// If a quote is reached and quotes have been reached before, add it
 			if (data[i] == '"' && quotes) {
 				quotenum++;
 			}
+			// If quotes are in the parsing string and the current character is a quote
+			// and the next character is a comma and the number of quotes is even, then
+			// that must be the last quote. Add it to the string and break.
 			if (quotes && data[i] == '"' && data[i + 1] == ',' && quotenum % 2 == 0) {
 				s += data[i];
 				break;
 			}
+			// If no quotes and comma reached, break
 			if (!quotes && data[i] == ',') {
 				break;
 			}
+			// Add character
 			s += data[i];
 		}
 		return s;

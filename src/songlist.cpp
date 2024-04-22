@@ -10,6 +10,7 @@ void SongList::qsorthelper(int low, int high) {
 		return;
 	}
 	int p = partition(low, high);
+	// If statements stop index errors
 	if (p != 0) {
 		qsorthelper(low, p - 1);
 	}
@@ -19,27 +20,33 @@ void SongList::qsorthelper(int low, int high) {
 }
 
 int SongList::partition(int low, int high) {
+	// Set pivot to first element
 	Song pivot = list[low];
 	int up = low, down = high;
 	while (up < down) {
+		// While up is to the left of down, increment up by comparing the current sum of energy and
+		// danceability to the pivot sum
 		for (int _ = up; _ < high; _++) {
 			if (list[up].danceability + list[up].energy < pivot.danceability + pivot.energy) {
 				break;
 			}
 			up++;
 		}
+		// Decrement down the same way
 		for (int _ = down; _ > low; _--) {
 			if (list[down].danceability + list[down].energy > pivot.danceability + pivot.energy) {
 				break;
 			}
 			down--;
 		}
+		// If up is still to the left of down, swap up and down
 		if (up < down) {
 			Song temp = list[up];
 			list[up] = list[down];
 			list[down] = temp;
 		}
 	}
+	// Swap low and down
 	Song temp = list[low];
 	list[low] = list[down];
 	list[down] = temp;
@@ -49,10 +56,7 @@ int SongList::partition(int low, int high) {
 SongList::SongList(float maxDance, float maxEnergy, bool expl) {
 	// Keep track of track ID's since they are unique
 	unordered_set<string> track_ids;
-	// TODO: Continue implementation with file reading
-	//			a. Implement with limits here so that 
-	//			the songs are loaded after the user's
-	//			choice is already made
+
 	string path = "data/dataset.csv";
 	ifstream file(path);
 	// Relative path shenanigans
@@ -147,13 +151,20 @@ void SongList::quicksort() {
 }
 
 void SongList::shellsort() {
+	// Start gap at half the list size, divide by 2 each iteration
 	for (int gap = list.size() / 2; gap > 0; gap /= 2) {
+		// Start i at the gap, increment by 1 until last index
 		for (int i = gap; i < list.size(); i++) {
+			// Start temp for swapping
 			Song temp = list[i];
 			int j;
+			// Start j at i and decrement by gap until either j is greater than or
+			// equal to the gap or the current sum at j - gap is less than the temp sum
 			for (j = i; j >= gap && (list[j - gap].danceability + list[j - gap].energy) < temp.danceability + temp.energy; j -= gap) {
+				// Set j element to the j - gap element
 				list[j] = list[j - gap];
 			}
+			// Complete swap
 			list[j] = temp;
 		}
 	}
