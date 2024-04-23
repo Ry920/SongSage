@@ -24,5 +24,5 @@ While the users wait for their curated list to be generated, a “Loading” and
 - Song Dataset:  https://www.kaggle.com/datasets/maharshipandya/-spotify-tracks-dataset
 - Fonts from: https://www.fontspace.com/category/ttf
 - “setText” function from “Minesweeper”assignment created by Dr. Cruz Castro for COP3530, University of Florida, Summer 2023
-- UTF-8 File Encodng: c++ - How to read an UTF-8 encoded file containing Chinese characters and output them correctly on console? - Stack Overflow
-- Shell Sort Implementation: ShellSort - GeeksforGeeks
+- UTF-8 File Encodng: https://stackoverflow.com/questions/20195262/how-to-read-an-utf-8-encoded-file-containing-chinese-characters-and-output-them
+- Shell Sort Implementation: [ShellSort - GeeksforGeeks](https://www.geeksforgeeks.org/shellsort/)
